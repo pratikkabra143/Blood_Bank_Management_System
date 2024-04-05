@@ -198,25 +198,49 @@ def admin_request_history_view(request):
 def admin_donation_view(request):
     donations=dmodels.BloodDonate.objects.all()
     return render(request,'blood/admin_donation.html',{'donations':donations})
+compatibility_rules = {
+    "A+": ["A+", "A-", "O+", "O-"],
+    "A-": ["A-", "O-"],
+    "B+": ["B+", "B-", "O+", "O-"],
+    "B-": ["B-", "O-"],
+    "AB+": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    "AB-": ["A-", "B-", "AB-", "O-"],
+    "O+": ["O+", "O-"],
+    "O-": ["O-"],
+}
+
 
 @login_required(login_url='adminlogin')
-def update_approve_status_view(request,pk):
-    req=models.BloodRequest.objects.get(id=pk)
-    message=None
-    bloodgroup=req.bloodgroup
-    unit=req.unit
-    stock=models.Stock.objects.get(bloodgroup=bloodgroup)
-    if stock.unit > unit:
-        stock.unit=stock.unit-unit
-        stock.save()
-        req.status="Approved"
-        
-    else:
-        message="Stock Doest Not Have Enough Blood To Approve This Request, Only "+str(stock.unit)+" Unit Available"
-    req.save()
+def update_approve_status_view(request, pk):
+    blood_request = models.BloodRequest.objects.get(id=pk)
+    blood_group = blood_request.bloodgroup
+    unit = blood_request.unit
+    stock = models.Stock.objects.get(bloodgroup=blood_group)
+    
+    # Check compatibility with the available blood in stock
+    compatible_blood_groups = compatibility_rules[blood_group]
+    available_blood_units = sum([stock.unit for stock in models.Stock.objects.filter(bloodgroup__in=compatible_blood_groups)])
 
-    requests=models.BloodRequest.objects.all().filter(status='Pending')
-    return render(request,'blood/admin_request.html',{'requests':requests,'message':message})
+    if available_blood_units >= unit:
+        blood_request.status = 'Approved'
+        
+        # Deduct units from compatible blood groups in stock
+        for compatible_group in compatible_blood_groups:
+            compatible_stock = models.Stock.objects.get(bloodgroup=compatible_group)
+            if unit > 0:
+                deduct_units = min(unit, compatible_stock.unit)
+                compatible_stock.unit -= deduct_units
+                compatible_stock.save()
+                unit -= deduct_units
+
+        blood_request.save()
+    else:
+        blood_request.status = 'Rejected: Insufficient Compatible Stock'
+        blood_request.save()
+
+    requests = models.BloodRequest.objects.all().filter(status='Pending')
+    return HttpResponseRedirect('/admin-request')
+
 
 @login_required(login_url='adminlogin')
 def update_reject_status_view(request,pk):
