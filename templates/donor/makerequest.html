@@ -71,196 +71,18 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="name">Blood Bag Type</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <div class="rs-select2 js-select-simple select--no-search">
-                                    <select id="bloodbag" name="bloodbag" class="form-control" onchange="updateSizes()">
-                                        <option disabled="disabled" selected="selected">Please Select</option>
-                                        <option>Single Blood Bag</option>
-                                        <option>Double Blood Bag</option>
-                                        <option>Triple Blood Bag</option>
-                                        <option>Quadruple Blood Bag</option>
-                                        <option>Transfer Bag</option>
-                                    </select>
-                                    <div class="select-dropdown"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-row" id="sizeRow" style="display: none;">
-                        <div class="name">Size</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <div class="rs-select2 js-select-simple select--no-search">
-                                    <select id="size" name="size" class="form-control" onchange="updateQuantity()">
-                                        <!-- Options will be dynamically populated based on the selection of blood bag type -->
-                                    </select>
-                                    <div class="select-dropdown"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row" id="quantityRow" style="display: none;">
-                        <div class="name">Quantity</div>
-                        <div class="value">
-                            <div class="input-group">
-                                <div class="rs-select2 js-select-simple select--no-search">
-                                    <select id="quantity" name="quantity" class="form-control">
-                                        <!-- Options will be dynamically populated based on the selection of size -->
-                                    </select>
-                                    <div class="select-dropdown"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
                         <div class="name">Unit (ml)</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field request_form.unit|attr:'required:true'  id='unit'  class="input--style-5"  %}
+                                {% render_field request_form.unit|attr:'required:true'  class="input--style-5"  %}
                             </div>
                         </div>
                     </div>
 
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                                // Add event listeners to the size and quantity dropdowns
-                                document.getElementById("size").addEventListener("change", updateUnit);
-                                document.getElementById("quantity").addEventListener("change", updateUnit);
-
-                                // Add event listener to the form submission event
-                                document.querySelector("form").addEventListener("submit", function(event) {
-                                    // Call updateUnit() to update the unit value just before the form submits
-                                    updateUnit();
-                                });
-                            });
-
-                        function updateSizes() {
-                            var bloodBagType = document.getElementById("bloodbag").value;
-                            var sizeSelect = document.getElementById("size");
-                            sizeSelect.innerHTML = ""; // Clear previous options
                     
-                            // Populate size options based on blood bag type
-                            switch (bloodBagType) {
-                                case "Single Blood Bag":
-                                    sizeSelect.add(new Option("250 ml", "250ml"));
-                                    sizeSelect.add(new Option("350 ml", "350ml"));
-                                    break;
-                                case "Double Blood Bag":
-                                    sizeSelect.add(new Option("500 ml", "500ml"));
-                                    sizeSelect.add(new Option("700 ml", "700ml"));
-                                    break;
-                                case "Triple Blood Bag":
-                                    sizeSelect.add(new Option("750 ml", "750ml"));
-                                    sizeSelect.add(new Option("1050 ml", "1050ml"));
-                                    break;
-                                case "Quadruple Blood Bag":
-                                    sizeSelect.add(new Option("1000 ml", "1000ml"));
-                                    sizeSelect.add(new Option("1400 ml", "1400ml"));
-                                    break;
-                                case "Transfer Bag":
-                                    sizeSelect.add(new Option("250 ml", "250ml"));
-                                    sizeSelect.add(new Option("500 ml", "500ml"));
-                                    sizeSelect.add(new Option("1000 ml", "1000ml"));
-                                    break;
-                                default:
-                                    // If "Please Select" or unknown option is selected, hide size row
-                                    document.getElementById("sizeRow").style.display = "none";
-                                    document.getElementById("quantityRow").style.display = "none"; // Also hide quantity row
-                                    return;
-                            }
-                    
-                            // Show size row if it's hidden
-                            document.getElementById("sizeRow").style.display = "block";
-                        }
-                    
-                        function updateQuantity() {
-                            var size = document.getElementById("size").value;
-                            var quantitySelect = document.getElementById("quantity");
-                            quantitySelect.innerHTML = ""; // Clear previous options
-                    
-                            // Populate quantity options based on size
-                            switch (size) {
-                                case "250ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    quantitySelect.add(new Option("2", "2"));
-                                    quantitySelect.add(new Option("3", "3"));
-                                    break;
-                                case "350ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    quantitySelect.add(new Option("2", "2"));
-                                    break;
-                                case "500ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    break;
-                                case "700ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    quantitySelect.add(new Option("2", "2"));
-                                    break;
-                                case "750ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    break;
-                                case "1050ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    break;
-                                case "1000ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    break;
-                                case "1400ml":
-                                    quantitySelect.add(new Option("1", "1"));
-                                    break;
-                                default:
-                                    // If unknown size is selected, hide quantity row
-                                    document.getElementById("quantityRow").style.display = "none";
-                                    return;
-                            }
-                    
-                            // Show quantity row if it's hidden
-                            document.getElementById("quantityRow").style.display = "block";
-                        }
 
-                        function updateUnit() {
-                            var size = document.getElementById("size").value;
-                            var quantity = document.getElementById("quantity").value;
-                            var unit = 0;
 
-                            // Calculate unit based on size and quantity
-                            switch (size) {
-                                case "250ml":
-                                    unit = 250 * quantity;
-                                    break;
-                                case "350ml":
-                                    unit = 350 * quantity;    
-                                    break;
-                                case "500ml":
-                                    unit = 500 * quantity;
-                                    break;
-                                case "700ml":
-                                    unit = 700 * quantity;
-                                    break;
-                                case "750ml":
-                                    unit = 750 * quantity;
-                                    break;
-                                case "1050ml":
-                                    unit = 1050 * quantity;
-                                    break;
-                                case "1000ml":
-                                    unit = 1000 * quantity;
-                                    break;
-                                case "1400ml":
-                                    unit = 1400 * quantity;
-                                    break;
-                            }
 
-                            // Update the input field for unit
-                            document.getElementById("unit").value = unit;
-                        }
-
-                    </script>
 
                     <div class="text-center">
                         <button class="btn btn--radius-2 btn-danger" type="submit">REQUEST</button>
@@ -268,6 +90,7 @@
                 </form>
                 <br>
                 
+
             </div>
         </div>
     </div>
