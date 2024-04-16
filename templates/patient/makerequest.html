@@ -94,7 +94,7 @@
                         <div class="value">
                             <div class="input-group">
                                 <div class="rs-select2 js-select-simple select--no-search">
-                                    <select id="size" name="size" class="form-control" onchange="updateQuantity()">
+                                    <select id="size" name="size" class="form-control">
                                         <!-- Options will be dynamically populated based on the selection of blood bag type -->
                                     </select>
                                     <div class="select-dropdown"></div>
@@ -128,16 +128,29 @@
 
                     <script>
                         document.addEventListener("DOMContentLoaded", function() {
-                                // Add event listeners to the size and quantity dropdowns
-                                document.getElementById("size").addEventListener("change", updateUnit);
-                                document.getElementById("quantity").addEventListener("change", updateUnit);
+                            // Add event listeners to the size and quantity dropdowns
+                            document.getElementById("bloodbag").addEventListener("change", updateSizesAndQuantity);
+                            document.getElementById("size").addEventListener("change", updateUnit);
+                            document.getElementById("size").addEventListener("change", updateQuantity);
+                            document.getElementById("quantity").addEventListener("change", updateUnit);
 
-                                // Add event listener to the form submission event
-                                document.querySelector("form").addEventListener("submit", function(event) {
-                                    // Call updateUnit() to update the unit value just before the form submits
-                                    updateUnit();
-                                });
+                            // Add event listener to the form submission event
+                            document.querySelector("form").addEventListener("submit", function(event) {
+                                // Call updateUnit() to update the unit value just before the form submits
+                                updateUnit();
                             });
+
+                            updateSizesAndQuantity();
+
+                        });
+
+                        function updateSizesAndQuantity() {
+                            // Update sizes dropdown
+                            updateSizes();
+
+                            // Update quantity dropdown
+                            updateQuantity();
+                        }
 
                         function updateSizes() {
                             var bloodBagType = document.getElementById("bloodbag").value;
