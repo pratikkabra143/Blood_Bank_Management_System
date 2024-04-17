@@ -44,13 +44,65 @@
                     </div>
 
                     <div class="form-row">
-                        <div class="name">Unit (ml)</div>
+                        <div class="name">Gender</div>
                         <div class="value">
                             <div class="input-group">
-                                {% render_field donation_form.unit|attr:'required:true'  class="input--style-5"  min="350"  max="450"  step=100  %}
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select id="gender" name="gender" class="form-control">
+                                        <option disabled="disabled" selected="selected">Please Select</option>
+                                        <option>Male</option>
+                                        <option>Female</option>
+                                        <option>Others</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="name">Unit (ml)</div>
+                        <div class="value">
+                            <div class="input-group">
+                                {% render_field donation_form.unit|attr:'required:true'  id='unit'  class="input--style-5"  min="350"  max="450"  step=100  %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <script>
+                        
+                        document.addEventListener("DOMContentLoaded", function() {
+                            // Add event listeners to the size and quantity dropdowns
+                            document.getElementById("gender").addEventListener("change", updateUnit);
+
+                            // Add event listener to the form submission event
+                            document.querySelector("form").addEventListener("submit", function(event) {
+                                // Call updateUnit() to update the unit value just before the form submits
+                                updateUnit();
+                            });
+                        });
+
+                        function updateUnit() {
+                            var gender = document.getElementById("gender").value;
+                            var unit = 0;
+
+                            // Calculate unit based on size and quantity
+                            switch (gender) {
+                                case "Male":
+                                    unit = 450;
+                                    break;
+                                case "Female":
+                                    unit = 350;    
+                                    break;
+                                case "Others":
+                                    unit = 350;
+                                    break;
+                            }
+
+                            // Update the input field for unit
+                            document.getElementById("unit").value = unit;
+                        }
+                    </script>
 
                     <div class="form-row">
                         <div class="name">Disease (if any)</div>
@@ -70,16 +122,11 @@
                         </div>
                     </div>
 
-                 
-
-
-
                     <div class="text-center">
                         <button class="btn btn--radius-2 btn-success" type="submit">DONATE</button>
                     </div>
                 </form>
-                <br>
-                
+                <br>                
 
             </div>
         </div>
