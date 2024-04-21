@@ -13,7 +13,7 @@
                 <i class="fa fa-user-plus xyz" style="color: #1e88e5;"></i>
               </div><br>
               <div>
-                Request Made <br>
+                 Donation Requests <br>
                   {{requestmade}}
               </div>                            
           </div>
@@ -27,7 +27,7 @@
                   <i class="fas fa-sync xyz" style="color:#efb000;"></i>
                 </div><br>
                 <div>
-                    Pending Request <br>
+                   Pending Donations <br>
                     {{requestpending}}
                 </div>                            
             </div>
@@ -41,7 +41,7 @@
                     <i class="fas fa-check-circle xyz" style="color: green;"></i>
                   </div><br>
                   <div>
-                       Approved Request<br>
+                       Donations Approved <br>
                       {{requestapproved}}
                   </div>                            
               </div>
@@ -54,8 +54,67 @@
                     <i class="fas fa-times-circle xyz" style="color: red;"></i>
                   </div><br>
                   <div>
-                       Rejected Request <br>
+                       Donations Rejected <br>
                       {{requestrejected}}
+                  </div>                            
+              </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-3">
+        <div class="card bg-light">
+          <div class="card-body">
+              <div class="blood">
+                <i class="fa fa-user-plus xyz" style="color: #1e88e5;"></i>
+              </div><br>
+              <div>
+                Blood Request Made <br>
+                  {{bloodrequestmade}}
+              </div>                            
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-3">
+        <div class="card bg-light">
+            <div class="card-body">
+                <div class="blood">
+                  <i class="fas fa-sync xyz" style="color:#efb000;"></i>
+                </div><br>
+                <div>
+                    Blood Request Pending <br>
+                    {{bloodrequestpending}}
+                </div>                            
+            </div>
+          </div>
+      </div>
+
+      <div class="col-sm-3">
+          <div class="card bg-light">
+              <div class="card-body">
+                  <div class="blood">
+                    <i class="fas fa-check-circle xyz" style="color: green;"></i>
+                  </div><br>
+                  <div>
+                       Blood Request Approved <br>
+                      {{bloodrequestapproved}}
+                  </div>                            
+              </div>
+            </div>
+      </div>
+      <div class="col-sm-3">
+          <div class="card bg-light">
+              <div class="card-body">
+                  <div class="blood">
+                    <i class="fas fa-times-circle xyz" style="color: red;"></i>
+                  </div><br>
+                  <div>
+                       Blood Request Rejected <br>
+                      {{bloodrequestrejected}}
                   </div>                            
               </div>
             </div>

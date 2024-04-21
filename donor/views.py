@@ -39,6 +39,10 @@ def donor_dashboard_view(request):
         'requestapproved': models.BloodDonate.objects.all().filter(donor=donor).filter(status='Approved').count(),
         'requestmade': models.BloodDonate.objects.all().filter(donor=donor).count(),
         'requestrejected': models.BloodDonate.objects.all().filter(donor=donor).filter(status='Rejected').count(),
+        'bloodrequestpending': bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).filter(status='Pending').count(),
+        'bloodrequestapproved': bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).filter(status='Approved').count(),
+        'bloodrequestmade': bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).count(),
+        'bloodrequestrejected': bmodels.BloodRequest.objects.all().filter(request_by_donor=donor).filter(status='Rejected').count(),
     }
     return render(request,'donor/donor_dashboard.html',context=dict)
 
