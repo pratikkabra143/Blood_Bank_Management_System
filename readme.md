@@ -1,3 +1,14 @@
+## This is a Simple Blood Bank Management System based on Python Django
+# Tools or Languages used-
+Python
+HTML
+CSS
+Javascript
+Django
+SQLite3
+
+#My project as name suggest is a blood bank management system which also includes blood compatibility rules, gender specific modifications, blood bag size standards and all basic features a blood bank management system should have. Future work- Proper Authentication System, Proper Multi-Instance Support, User authentication based on Adhaar, More Beautiful and Dynamic Frontend, idk there are many nore possibilities....
+
 # Steps for First Use
 
 python -m venv venv/      #Only for local machine
